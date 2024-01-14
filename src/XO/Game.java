@@ -1,42 +1,117 @@
 package XO;
 
-
 import java.util.ArrayList;
 
 public abstract class Game {
 
+    private Mark[][] gameBoard;
+    private boolean isGameOver;
 
-    public XO type;
 
-    private String[][] gameBoard = new String[5][5];
+    // CTOR INITIALIZE GAME
+    public Game() {
 
-    public void printBoard(){
-        for (int i=0; i<5; i++){
-            for (int j=0; j<5; j++){
-                if (gameBoard[i][j] != null) System.out.print(gameBoard[i][j] + " ");
-                else System.out.print(" - ");
+        isGameOver = false;
+
+        gameBoard = new Mark[5][5];
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                gameBoard[i][j] = Mark.c;
             }
-            System.out.println();
         }
     }
 
-    public XO getTurn(){
-        //todo
-        return type;
+    // PRINT BOARD
+    public void printBoard() {
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 5; j++) {
+                System.out.print(" " + gameBoard[i][j] + " ");
+                if (j < 4) {
+                    System.out.print("|");
+                }
+            }
+            System.out.println();
+            if (i < 4) {
+                System.out.println("----------------");
+            }
+        }
+        System.out.println("----------------------------");
+
     }
 
+
+    // RETURN ALL AVAILABLE MOVES
     public ArrayList<Cell> getFreeCells() {
         ArrayList<Cell> cells = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (gameBoard[i][j] == null){
-                    cells.add(new Cell(i,j));
+                if (gameBoard[i][j] == Mark.c) {
+                    cells.add(new Cell(i, j));
                 }
             }
         }
         return cells;
     }
 
+    public void placeMove(int row, int col, Mark player) {
+        if (row >= 0 && row < 5 && col >= 0 && col < 5 && gameBoard[row][col] == Mark.c) {
+            gameBoard[row][col] = player;
+        } else {
+            System.out.println("Invalid move. Please try again.");
+        }
+    }
+
+    // CHECK IF BOARD IS FULL
+    public boolean isBoardFull() {
+        return getFreeCells().isEmpty();
+    }
 
 
+    // CHECK FOR A WINNER
+    public Mark checkForWinner() {
+
+        // ROWS
+        for (int i = 0; i < 5; i++) {
+            if (checkLine(gameBoard[i][0], gameBoard[i][1], gameBoard[i][2], gameBoard[i][3])) {
+                return gameBoard[i][0];
+            }
+        }
+
+        // COLUMNS
+        for (int j = 0; j < 5; j++) {
+            if (checkLine(gameBoard[0][j], gameBoard[1][j], gameBoard[2][j], gameBoard[3][j])) {
+                return gameBoard[0][j];
+            }
+        }
+
+        // DIAGONALS
+        if (checkLine(gameBoard[0][0], gameBoard[1][1], gameBoard[2][2], gameBoard[3][3])) {
+            return gameBoard[0][0];
+        }
+        if (checkLine(gameBoard[0][3], gameBoard[1][2], gameBoard[2][1], gameBoard[3][0])) {
+            return gameBoard[0][3];
+        }
+
+        return Mark.c; // No winner yet
+    }
+
+    // Helper method
+    private boolean checkLine(Mark a, Mark b, Mark c, Mark d) {
+        return (a != Mark.c && a == b && b == c && c == d);
+    }
+
+
+
+    public boolean isGameOver() {
+        return isGameOver;
+    }
+
+    public void setGameOver(boolean b) {
+        isGameOver = b;
+    }
 }
+
+
+
+
+

@@ -2,8 +2,8 @@ package XO;
 
 public abstract class Player {
 
-
-    public Player(XO type){
-
+    Mark type;
+    public Player(Mark type){
+        this.type=type;
     }
 }

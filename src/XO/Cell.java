@@ -2,18 +2,17 @@ package XO;
 
 public class Cell {
 
-    private char type = '_';
-    private int i,j;
+    private int row,col;
 
     public Cell(int x, int y){
-        i=x;
-        j=y;
-    }
-    public Cell get(){
-        return this;
+        row=x;
+        col=y;
     }
 
-    public char getChar() {
-        return type;
+    public int getRow() {
+        return row;
+    }
+    public int getCol() {
+        return col;
     }
 }
