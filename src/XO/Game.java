@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public abstract class Game {
 
     private Mark[][] gameBoard;
+    private Mark turn;
     private boolean isGameOver;
 
 
@@ -12,11 +13,11 @@ public abstract class Game {
     public Game() {
 
         isGameOver = false;
-
+        turn = Mark.O;
         gameBoard = new Mark[5][5];
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                gameBoard[i][j] = Mark.c;
+                gameBoard[i][j] = Mark.E;
             }
         }
     }
@@ -39,13 +40,20 @@ public abstract class Game {
 
     }
 
+    public synchronized Mark getTurn(){
+        return turn;
+    }
+    public synchronized void setTurn(Mark t){
+        turn = t;
+    }
+
 
     // RETURN ALL AVAILABLE MOVES
-    public ArrayList<Cell> getFreeCells() {
+    public synchronized ArrayList<Cell> getFreeCells() {
         ArrayList<Cell> cells = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                if (gameBoard[i][j] == Mark.c) {
+                if (gameBoard[i][j] == Mark.E) {
                     cells.add(new Cell(i, j));
                 }
             }
@@ -54,7 +62,7 @@ public abstract class Game {
     }
 
     public void placeMove(int row, int col, Mark player) {
-        if (row >= 0 && row < 5 && col >= 0 && col < 5 && gameBoard[row][col] == Mark.c) {
+        if (row >= 0 && row < 5 && col >= 0 && col < 5 && gameBoard[row][col] == Mark.E) {
             gameBoard[row][col] = player;
         } else {
             System.out.println("Invalid move. Please try again.");
@@ -92,12 +100,12 @@ public abstract class Game {
             return gameBoard[0][3];
         }
 
-        return Mark.c; // No winner yet
+        return Mark.E; // No winner yet
     }
 
     // Helper method
     private boolean checkLine(Mark a, Mark b, Mark c, Mark d) {
-        return (a != Mark.c && a == b && b == c && c == d);
+        return (a != Mark.E && a == b && b == c && c == d);
     }
 
 
