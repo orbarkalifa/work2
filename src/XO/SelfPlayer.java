@@ -33,7 +33,7 @@ public class SelfPlayer extends Player implements Runnable {
                     }
                     // Check for a winner or a draw
                     Mark winner = game.checkForWinner();
-                    if (winner != Mark.E || game.isBoardFull()) {
+                    if (winner != Mark.e || game.isBoardFull()) {
                         game.setGameOver(true);
                         break;
                     }

@@ -1,6 +1,6 @@
 package XO;
 
-public class Cell {
+public class Cell{
 
     private int row,col;
 
@@ -15,4 +15,6 @@ public class Cell {
     public int getCol() {
         return col;
     }
+
+
 }
