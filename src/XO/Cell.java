@@ -1,6 +1,6 @@
 package XO;
 
-public class Cell{
+public class Cell implements Comparable{
 
     private int row,col;
 
@@ -17,4 +17,10 @@ public class Cell{
     }
 
 
+    @Override
+    public int compareTo(Object o) {
+        Cell other = (Cell) o;
+        if(row==other.getRow() && col == other.getCol()) return 0;
+        return -1;
+    }
 }

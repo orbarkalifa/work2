@@ -5,9 +5,9 @@ import java.util.List;
 public class SelfPlayer extends Player implements Runnable {
     private SelfGame game;
 
-    public SelfPlayer(SelfGame game, Mark playerMark) {
+    public SelfPlayer(Game game, Mark playerMark) {
         super(playerMark);
-        this.game = game;
+        this.game = (SelfGame) game;
     }
 
 
