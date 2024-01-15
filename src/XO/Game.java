@@ -103,32 +103,41 @@ public abstract class Game {
             if(gameBoard[1][3]==gameBoard[2][2] && gameBoard[1][3] == gameBoard[3][1])
                 return gameBoard[2][2];
 
-        if (checkLine(gameBoard[0][1], gameBoard[1][2], gameBoard[2][3], gameBoard[3][4])) {
+        if (gameBoard[0][1] == gameBoard[1][2] &&  gameBoard[2][3] == gameBoard[1][2]&& gameBoard[2][3] == gameBoard[3][4]){
             return gameBoard[0][1];
         }
-        if (checkLine(gameBoard[1][0], gameBoard[2][1], gameBoard[3][2], gameBoard[4][3])) {
+        if (gameBoard[1][0] == gameBoard[2][1] &&  gameBoard[3][2] == gameBoard[2][1]&& gameBoard[3][2] == gameBoard[4][3]) {
             return gameBoard[1][0];
         }
 
-        if (checkLine(gameBoard[0][3], gameBoard[1][2], gameBoard[2][1], gameBoard[3][0])) {
+        if(gameBoard[3][0] == gameBoard[2][1] &&  gameBoard[1][2] == gameBoard[2][1] && gameBoard[0][3] == gameBoard[1][2]){
             return gameBoard[0][1];
         }
-        if (checkLine(gameBoard[1][4], gameBoard[2][3], gameBoard[3][2], gameBoard[4][1])) {
+        if(gameBoard[1][4] == gameBoard[2][3] &&  gameBoard[3][2] == gameBoard[2][3] && gameBoard[3][2] == gameBoard[4][1]) {
             return gameBoard[1][4];
         }
 
         return Mark.E; // No winner yet
     }
 
-    // Helper method
-    private boolean checkLine(Mark a, Mark b, Mark c, Mark d) {
-        return (a != Mark.E && a == b && b == c && c == d);
-    }
-
-
-
     public boolean isGameOver() {
+        if(isBoardFull())
+            return true;
         return isGameOver;
+    }
+    public void printWinner(Mark type)
+    {
+        switch (type){
+            case X:
+                System.out.println("X won");
+                break;
+            case O:
+                System.out.println("O won");
+                break;
+            case E:
+                System.out.println("It's a tie!!!!!!!!!!!!!!!!!!!!!!!!!");
+                break;
+        }
     }
 
     public void setGameOver(boolean b) {

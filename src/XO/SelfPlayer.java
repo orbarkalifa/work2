@@ -27,7 +27,10 @@ public class SelfPlayer extends Player implements Runnable {
                     game.placeMove(chosenCell.getRow(), chosenCell.getCol(), playerMark);
                     game.printBoard();
                     game.setTurn(playerMark);
-
+                    if(game.isGameOver()) {
+                       game.printWinner(game.checkForWinner());
+                        break;
+                    }
                     // Check for a winner or a draw
                     Mark winner = game.checkForWinner();
                     if (winner != Mark.E || game.isBoardFull()) {
@@ -49,8 +52,6 @@ public class SelfPlayer extends Player implements Runnable {
             int randomIndex = (int) (Math.random() * freeCells.size());
             return freeCells.get(randomIndex);
         }
-
-        System.out.println("Null returned - no free cells");
         return null;
     }
 }
