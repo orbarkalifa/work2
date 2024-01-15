@@ -141,7 +141,7 @@ public abstract class Game {
             case O:
                 System.out.println("O won");
                 break;
-            case E:
+            case e:
                 System.out.println("It's a tie!!!!!!!!!!!!!!!!!!!!!!!!!");
                 break;
         }
