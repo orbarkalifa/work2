@@ -1,5 +1,5 @@
 package XO;
 
 public enum Mark {
-    X, O, E
+    X, O, e
 }

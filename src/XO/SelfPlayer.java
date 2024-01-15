@@ -25,15 +25,16 @@ public class SelfPlayer extends Player implements Runnable {
                 Cell chosenCell = chooseRandomCell();
                 if (chosenCell != null) {
                     game.placeMove(chosenCell.getRow(), chosenCell.getCol(), playerMark);
-                    game.printBoard();
-                    game.setTurn(playerMark);
-
                     // Check for a winner or a draw
                     Mark winner = game.checkForWinner();
-                    if (winner != Mark.E || game.isBoardFull()) {
+                    if (winner != Mark.e || game.isBoardFull()) {
                         game.setGameOver(true);
                         break;
                     }
+                    game.printBoard();
+                    game.setTurn(playerMark);
+
+
                 }
             }
 
