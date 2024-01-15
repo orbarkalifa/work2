@@ -80,41 +80,24 @@ public abstract class Game {
 
         // ROWS
         for (int i = 0; i < 5; i++) {
-            if(gameBoard[i][2] == gameBoard [i][0]|| gameBoard[i][2] == gameBoard[i][4])
-                if(gameBoard[i][1]==gameBoard[i][2] && gameBoard[i][1] == gameBoard[i][3])
-                    return gameBoard[i][2];
-
+            if (checkLine(gameBoard[i][0], gameBoard[i][1], gameBoard[i][2], gameBoard[i][3])) {
+                return gameBoard[i][0];
+            }
         }
 
         // COLUMNS
         for (int j = 0; j < 5; j++) {
-            if(gameBoard[2][j] == gameBoard [0][j]|| gameBoard[2][j] == gameBoard[4][j])
-                if(gameBoard[1][j]==gameBoard[2][j] && gameBoard[1][j] == gameBoard[3][j])
-                    return gameBoard[2][j];
+            if (checkLine(gameBoard[0][j], gameBoard[1][j], gameBoard[2][j], gameBoard[3][j])) {
+                return gameBoard[0][j];
+            }
         }
 
         // DIAGONALS
-        //main diagonal
-        if(gameBoard[2][2] == gameBoard [0][0]|| gameBoard[2][2] == gameBoard[4][4])
-            if(gameBoard[1][1]==gameBoard[2][2] && gameBoard[1][1] == gameBoard[3][3])
-                return gameBoard[2][2];
-        //sub diagonal
-        if(gameBoard[2][2] == gameBoard [0][4]|| gameBoard[2][2] == gameBoard[4][0])
-            if(gameBoard[1][3]==gameBoard[2][2] && gameBoard[1][3] == gameBoard[3][1])
-                return gameBoard[2][2];
-
-        if (checkLine(gameBoard[0][1], gameBoard[1][2], gameBoard[2][3], gameBoard[3][4])) {
-            return gameBoard[0][1];
+        if (checkLine(gameBoard[0][0], gameBoard[1][1], gameBoard[2][2], gameBoard[3][3])) {
+            return gameBoard[0][0];
         }
-        if (checkLine(gameBoard[1][0], gameBoard[2][1], gameBoard[3][2], gameBoard[4][3])) {
-            return gameBoard[1][0];
-        }
-
         if (checkLine(gameBoard[0][3], gameBoard[1][2], gameBoard[2][1], gameBoard[3][0])) {
-            return gameBoard[0][1];
-        }
-        if (checkLine(gameBoard[1][4], gameBoard[2][3], gameBoard[3][2], gameBoard[4][1])) {
-            return gameBoard[1][4];
+            return gameBoard[0][3];
         }
 
         return Mark.e; // No winner yet
@@ -135,3 +118,8 @@ public abstract class Game {
         isGameOver = b;
     }
 }
+
+
+
+
+
