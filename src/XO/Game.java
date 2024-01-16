@@ -1,6 +1,7 @@
 package XO;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public abstract class Game {
 
@@ -15,11 +16,34 @@ public abstract class Game {
         isGameOver = false;
         turn = Mark.O;
         gameBoard = new Mark[5][5];
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {//set board
             for (int j = 0; j < 5; j++) {
                 gameBoard[i][j] = Mark.e;
             }
         }
+    }
+    private  Mark[][] getBoard(){//get board
+        return gameBoard;
+    }
+    public Cell inputCell() {//function to get input from user
+        ArrayList<Cell> cells = this.getFreeCells();//free cell pull
+        Scanner input = new Scanner(System.in);
+        System.out.println("Enter x,y coordinates (0-4): ");
+        //gets choice
+        int x = input.nextInt();
+        int y = input.nextInt();
+        if(x<0||y<0||x>4||y>4) {
+            //makes sure you are in range
+            System.out.println("incorrect input. try again");
+            return inputCell();
+        }
+        Cell inputCell = new Cell(x,y);
+        if (this.getBoard()[x][y] !=Mark.e) {//make sure the cell is empty (e)
+            System.out.println("Cell was already chosen");
+            inputCell = inputCell();
+        }
+        return inputCell;
+
     }
 
     // PRINT BOARD
@@ -62,7 +86,7 @@ public abstract class Game {
     }
 
     public void placeMove(int row, int col, Mark player) {
-        if (row >= 0 && row < 5 && col >= 0 && col < 5 && gameBoard[row][col] == Mark.e) {
+        if (row >= 0 && row < 5 && col >= 0 && col < 5) {
             gameBoard[row][col] = player;
         } else {
             System.out.println("Invalid move. Please try again.");
@@ -76,7 +100,7 @@ public abstract class Game {
 
 
     // CHECK FOR A WINNER
-    public Mark checkForWinner() {
+    public synchronized Mark checkForWinner() {
 
         // ROWS
         for (int i = 0; i < 5; i++) {
@@ -88,9 +112,10 @@ public abstract class Game {
 
         // COLUMNS
         for (int j = 0; j < 5; j++) {
-            if(gameBoard[2][j] == gameBoard [0][j]|| gameBoard[2][j] == gameBoard[4][j])
-                if(gameBoard[1][j]==gameBoard[2][j] && gameBoard[1][j] == gameBoard[3][j])
+            if(gameBoard[2][j] == gameBoard [0][j]|| gameBoard[2][j] == gameBoard[4][j]) {
+                if (gameBoard[1][j] == gameBoard[2][j] && gameBoard[1][j] == gameBoard[3][j])
                     return gameBoard[2][j];
+            }
         }
 
         // DIAGONALS
@@ -151,6 +176,7 @@ public abstract class Game {
         isGameOver = b;
     }
 }
+
 
 
 

@@ -11,9 +11,11 @@ public class Main {
         switch (option) {   // Initialize the game
 
             case 1:
+                //NPC VS NPC
                 SelfGame selfGame = new SelfGame();
                 break;
             case 2:
+                //Player VS NPC
                 UserGame userGame = new UserGame();
                 break;
 

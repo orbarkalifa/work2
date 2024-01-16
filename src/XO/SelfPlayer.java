@@ -3,13 +3,17 @@ package XO;
 import java.util.List;
 
 public class SelfPlayer extends Player implements Runnable {
-    private SelfGame game;
+    private Game game;
 
-    public SelfPlayer(Game game, Mark playerMark) {
+    public SelfPlayer(SelfGame game, Mark playerMark) {
         super(playerMark);
-        this.game = (SelfGame) game;
+        this.game = game;
     }
 
+    public SelfPlayer(UserGame game, Mark playerMark) {
+        super(playerMark);
+        this.game = game;
+    }
 
 
     @Override
@@ -21,23 +25,24 @@ public class SelfPlayer extends Player implements Runnable {
                 e.printStackTrace();
             }
 
-            if(!(game.getTurn() == playerMark)){
+            if (!(game.getTurn() == playerMark)) {
                 Cell chosenCell = chooseRandomCell();
-                if (chosenCell != null) {
-                    game.placeMove(chosenCell.getRow(), chosenCell.getCol(), playerMark);
-                    game.printBoard();
-                    game.setTurn(playerMark);
-                    if(game.isGameOver()) {
-                       game.printWinner(game.checkForWinner());
-                        break;
-                    }
-                    // Check for a winner or a draw
-                    Mark winner = game.checkForWinner();
-                    if (winner != Mark.e || game.isBoardFull()) {
-                        game.setGameOver(true);
-                        break;
-                    }
+                game.placeMove(chosenCell.getRow(), chosenCell.getCol(), playerMark);
+                game.printBoard();
+                game.setTurn(playerMark);
+                if (game.isGameOver()) {
+                    game.setGameOver(true);
+                    game.printWinner(game.checkForWinner());
+                    break;
                 }
+                // Check for a winner or a draw
+                Mark winner = game.checkForWinner();
+                if (winner != Mark.e || game.isBoardFull()) {
+                    game.setGameOver(true);
+                    game.printWinner(game.checkForWinner());
+                    break;
+                }
+
             }
 
         }
