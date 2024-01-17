@@ -1,6 +1,7 @@
 package XO;
 
-public class Cell implements Comparable{
+// this class will represent a cell using 2 integer coordinates
+public class Cell {
 
     private int row,col;
 
@@ -17,10 +18,5 @@ public class Cell implements Comparable{
     }
 
 
-    @Override
-    public int compareTo(Object o) {
-        Cell other = (Cell) o;
-        if(row==other.getRow() && col == other.getCol()) return 0;
-        return -1;
-    }
+
 }

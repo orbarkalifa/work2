@@ -9,16 +9,14 @@ public class Main {
         System.out.println("Enter 1 for self game or 2 for user game");
         int option = input.nextInt();
         switch (option) {   // Initialize the game
-
             case 1:
-                //NPC VS NPC
                 SelfGame selfGame = new SelfGame();
                 break;
             case 2:
-                //Player VS NPC
                 UserGame userGame = new UserGame();
                 break;
-
+            default:
+                System.out.println("invalid input, try again");
         }
     }
 }

@@ -4,7 +4,7 @@ public class SelfGame extends Game {
 
     Thread t1;
     Thread t2;
-
+    // initialize game, creating two selfPlayer threads and activate run() function for each
     public SelfGame() {
         super();
         SelfPlayer playerX = new SelfPlayer(this, Mark.O);

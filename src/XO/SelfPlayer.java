@@ -3,15 +3,9 @@ package XO;
 import java.util.List;
 
 public class SelfPlayer extends Player implements Runnable {
-    private Game game;
 
-    public SelfPlayer(SelfGame game, Mark playerMark) {
-        super(playerMark);
-        this.game = game;
-    }
-
-    public SelfPlayer(UserGame game, Mark playerMark) {
-        super(playerMark);
+    public SelfPlayer(Game game, Mark playerMark) { // c'tor
+        super(game, playerMark);
         this.game = game;
     }
 
@@ -24,25 +18,9 @@ public class SelfPlayer extends Player implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
             if (!(game.getTurn() == playerMark)) {
-                Cell chosenCell = chooseRandomCell();
-                game.placeMove(chosenCell.getRow(), chosenCell.getCol(), playerMark);
-                game.printBoard();
-                if (game.isGameOver()) {
-                    game.setGameOver(true);
-                    game.printWinner(game.checkForWinner());
-                    break;
-                }
-                // Check for a winner or a draw
-                Mark winner = game.checkForWinner();
-                if (winner != Mark.e || game.isBoardFull()) {
-                    game.setGameOver(true);
-                    game.printWinner(game.checkForWinner());
-                    break;
-                }
-                game.setTurn(playerMark);
-
+                System.out.println(playerMark + " played:");
+                playAndPrintBoard(chooseRandomCell());
             }
 
         }
