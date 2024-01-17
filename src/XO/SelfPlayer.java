@@ -4,7 +4,7 @@ import java.util.List;
 
 public class SelfPlayer extends Player implements Runnable {
 
-    public SelfPlayer(Game game, Mark playerMark) { // c'tor
+    public SelfPlayer(Game game, Mark playerMark) {
         super(game, playerMark);
         this.game = game;
     }
@@ -22,7 +22,6 @@ public class SelfPlayer extends Player implements Runnable {
                 System.out.println(playerMark + " played:");
                 playAndPrintBoard(chooseRandomCell());
             }
-
         }
     }
 

@@ -12,16 +12,10 @@ public class UserPlayer extends Player implements Runnable {
     public void run() {
         while (!game.isGameOver()) {
 
-            if(!(game.getTurn() == playerMark)) {
-                playAndPrintBoard(game.inputCell());
+            if(!(game.getTurn() == playerMark))  playAndPrintBoard(game.inputCell());
 
-                }
-            }
+        }
 
     }
-
-
-
-
 
 }
