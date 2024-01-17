@@ -22,7 +22,6 @@ public class UserPlayer extends Player implements Runnable {
                 Cell chosenCell = game.inputCell();
                     game.placeMove(chosenCell.getRow(), chosenCell.getCol(), playerMark);
                     game.printBoard();
-                    game.setTurn(playerMark);
                 if (game.isGameOver()) {
                     game.setGameOver(true);
                     game.printWinner(game.checkForWinner());
@@ -32,8 +31,10 @@ public class UserPlayer extends Player implements Runnable {
                     Mark winner = game.checkForWinner();
                     if (winner != Mark.e || game.isBoardFull()) {
                         game.setGameOver(true);
+                        game.printWinner(winner);
                         break;
                     }
+                game.setTurn(playerMark);
                 }
             }
 

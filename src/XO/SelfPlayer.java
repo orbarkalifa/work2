@@ -29,7 +29,6 @@ public class SelfPlayer extends Player implements Runnable {
                 Cell chosenCell = chooseRandomCell();
                 game.placeMove(chosenCell.getRow(), chosenCell.getCol(), playerMark);
                 game.printBoard();
-                game.setTurn(playerMark);
                 if (game.isGameOver()) {
                     game.setGameOver(true);
                     game.printWinner(game.checkForWinner());
@@ -42,6 +41,7 @@ public class SelfPlayer extends Player implements Runnable {
                     game.printWinner(game.checkForWinner());
                     break;
                 }
+                game.setTurn(playerMark);
 
             }
 

@@ -26,7 +26,6 @@ public abstract class Game {
         return gameBoard;
     }
     public Cell inputCell() {//function to get input from user
-        ArrayList<Cell> cells = this.getFreeCells();//free cell pull
         Scanner input = new Scanner(System.in);
         System.out.println("Enter x,y coordinates (0-4): ");
         //gets choice
@@ -104,7 +103,7 @@ public abstract class Game {
 
         // ROWS
         for (int i = 0; i < 5; i++) {
-            if(gameBoard[i][2] == gameBoard [i][0]|| gameBoard[i][2] == gameBoard[i][4])
+            if((gameBoard[i][2] == gameBoard [i][0]|| gameBoard[i][2] == gameBoard[i][4])&& gameBoard[i][2] != Mark.e)
                 if(gameBoard[i][1]==gameBoard[i][2] && gameBoard[i][1] == gameBoard[i][3])
                     return gameBoard[i][2];
 
@@ -112,7 +111,7 @@ public abstract class Game {
 
         // COLUMNS
         for (int j = 0; j < 5; j++) {
-            if(gameBoard[2][j] == gameBoard [0][j]|| gameBoard[2][j] == gameBoard[4][j]) {
+            if((gameBoard[2][j] == gameBoard [0][j]|| gameBoard[2][j] == gameBoard[4][j])&&gameBoard[2][j]!=Mark.e) {
                 if (gameBoard[1][j] == gameBoard[2][j] && gameBoard[1][j] == gameBoard[3][j])
                     return gameBoard[2][j];
             }
