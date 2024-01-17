@@ -1,7 +1,5 @@
 package XO;
 
-import java.util.ArrayList;
-import java.util.Scanner;
 
 public class UserGame extends Game {
 

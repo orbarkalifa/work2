@@ -19,7 +19,7 @@ public class SelfPlayer extends Player implements Runnable {
                 e.printStackTrace();
             }
             if (!(game.getTurn() == playerMark)) {
-                System.out.println(playerMark + " played:");
+                System.out.println(STR."\{playerMark} played:");
                 playAndPrintBoard(chooseRandomCell());
             }
         }
@@ -34,6 +34,6 @@ public class SelfPlayer extends Player implements Runnable {
             int randomIndex = (int) (Math.random() * freeCells.size());
             return freeCells.get(randomIndex);
         }
-        return null;
+        return freeCells.getFirst(); // doesn't matter, game is over
     }
 }
