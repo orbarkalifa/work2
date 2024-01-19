@@ -2,11 +2,12 @@ package XO;
 
 import java.util.List;
 
+import static java.lang.StringTemplate.STR;
+
 public class SelfPlayer extends Player implements Runnable {
 
     public SelfPlayer(Game game, Mark playerMark) {
         super(game, playerMark);
-        this.game = game;
     }
 
 
@@ -18,9 +19,11 @@ public class SelfPlayer extends Player implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            if (!(game.getTurn() == playerMark)) {
-                System.out.println(STR."\{playerMark} played:");
-                playAndPrintBoard(chooseRandomCell());
+            synchronized (game) {
+                if (!(game.getTurn() == playerMark)) {
+                    System.out.println(STR."\{playerMark} played:");
+                    playAndPrintBoard(chooseRandomCell());
+                }
             }
         }
     }

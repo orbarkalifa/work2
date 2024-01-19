@@ -11,8 +11,9 @@ public class UserPlayer extends Player implements Runnable {
     @Override
     public void run() {
         while (!game.isGameOver()) {
-
+            synchronized (game) {
             if(!(game.getTurn() == playerMark))  playAndPrintBoard(game.inputCell());
+            }
 
         }
 
