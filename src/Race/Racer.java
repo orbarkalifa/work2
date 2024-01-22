@@ -1,3 +1,7 @@
+// Or Bar-Califa 318279429
+// Daniel Fradkin 316410885
+// https://github.com/orbarkalifa/work2
+
 package Race;
 
 import static java.lang.Thread.currentThread;
@@ -6,8 +10,8 @@ public class Racer implements Runnable {
 
     private static int globalID = 1;
     private final int id;
-    private int speed;
-    private Track track;
+    private final int speed;
+    private final Track track;
 
     public Racer(int speed, Track track){
         id = globalID++;
@@ -22,7 +26,7 @@ public class Racer implements Runnable {
     public void go(){
 
         currentThread().setPriority(speed);
-        for (int i=0; i<10; i++){
+        for (int i=0; i<100; i++){
             System.out.println("Runner " + id + " ran " + (i+1) + " meters");
         }
         String place = Integer.toString(++track.finishedRacers);

@@ -1,3 +1,7 @@
+// Or Bar-Califa 318279429
+// Daniel Fradkin 316410885
+// https://github.com/orbarkalifa/work2
+
 package Race;
 
 public class Main {
@@ -8,13 +12,17 @@ public class Main {
 		Racer racer2 = new Racer(2, track);
 		Racer racer3 = new Racer(3, track);
 		Racer racer4 = new Racer(7, track);
+
 		Thread t1 = new Thread(racer1);
 		Thread t2 = new Thread(racer2);
 		Thread t3 = new Thread(racer3);
 		Thread t4 = new Thread(racer4);
+
 		t1.start();
 		t2.start();
 		t3.start();
 		t4.start();
+
+
 	}
 }
