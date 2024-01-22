@@ -7,7 +7,7 @@ import java.util.Scanner;
 // this class will manage the running game
 public abstract class Game {
 
-    private Mark[][] gameBoard;
+    private final Mark[][] gameBoard;
     private Mark turn;
     private boolean isGameOver;
 
@@ -117,16 +117,19 @@ public abstract class Game {
         // ROWS
         for (int i = 0; i < 5; i++) {
             if ((gameBoard[i][2] == gameBoard[i][0] || gameBoard[i][2] == gameBoard[i][4]) && gameBoard[i][2] != Mark.e)
-                if (gameBoard[i][1] == gameBoard[i][2] && gameBoard[i][1] == gameBoard[i][3])
+                if (gameBoard[i][1] == gameBoard[i][2] && gameBoard[i][1] == gameBoard[i][3]){
+                    isGameOver = true;
                     return gameBoard[i][2];
-
+                }
         }
 
         // COLUMNS
         for (int j = 0; j < 5; j++) {
             if ((gameBoard[2][j] == gameBoard[0][j] || gameBoard[2][j] == gameBoard[4][j]) && gameBoard[2][j] != Mark.e) {
-                if (gameBoard[1][j] == gameBoard[2][j] && gameBoard[1][j] == gameBoard[3][j])
+                if (gameBoard[1][j] == gameBoard[2][j] && gameBoard[1][j] == gameBoard[3][j]) {
+                    isGameOver = true;
                     return gameBoard[2][j];
+                }
             }
         }
 
@@ -135,25 +138,35 @@ public abstract class Game {
         //main diagonal
         if(gameBoard[2][2]!=Mark.e) {
             if (gameBoard[2][2] == gameBoard[0][0] || gameBoard[2][2] == gameBoard[4][4])
-                if (gameBoard[1][1] == gameBoard[2][2] && gameBoard[1][1] == gameBoard[3][3])
+                if (gameBoard[1][1] == gameBoard[2][2] && gameBoard[1][1] == gameBoard[3][3]){
+                    isGameOver = true;
                     return gameBoard[2][2];
+                }
+
             // anti diagonal
             if (gameBoard[2][2] == gameBoard[0][4] || gameBoard[2][2] == gameBoard[4][0])
-                if (gameBoard[1][3] == gameBoard[2][2] && gameBoard[1][3] == gameBoard[3][1])
+                if (gameBoard[1][3] == gameBoard[2][2] && gameBoard[1][3] == gameBoard[3][1]){
+                    isGameOver = true;
                     return gameBoard[2][2];
+                }
+
         }
         // sub diagonals
         if (checkLine(gameBoard[0][1], gameBoard[1][2], gameBoard[2][3], gameBoard[3][4])) {
+            isGameOver = true;
             return gameBoard[0][1];
         }
         if (checkLine(gameBoard[1][0], gameBoard[2][1], gameBoard[3][2], gameBoard[4][3])) {
+            isGameOver = true;
             return gameBoard[1][0];
         }
         // sub anti diagonals
         if (checkLine(gameBoard[0][3], gameBoard[1][2], gameBoard[2][1], gameBoard[3][0])) {
+            isGameOver = true;
             return gameBoard[0][3];
         }
         if (checkLine(gameBoard[1][4], gameBoard[2][3], gameBoard[3][2], gameBoard[4][1])) {
+            isGameOver = true;
             return gameBoard[1][4];
         }
 
@@ -166,9 +179,7 @@ public abstract class Game {
     }
 
     public synchronized boolean isGameOver() { // returns boolean that represents if the game is over
-        if (isBoardFull() || checkForWinner() != Mark.e)
-            isGameOver = true;
-        return isGameOver;
+        return (isBoardFull() || isGameOver);
     }
 
     public void printWinner(Mark type) {

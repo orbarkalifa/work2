@@ -10,13 +10,17 @@ public class Main {
         int option = input.nextInt();
         switch (option) {   // Initialize the game
             case 1:
-                SelfGame selfGame = new SelfGame();
+                new SelfGame();
                 break;
             case 2:
-                UserGame userGame = new UserGame();
+                new UserGame();
                 break;
             default:
                 System.out.println("invalid input, try again");
+                break;
         }
+
     }
+
+
 }
