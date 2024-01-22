@@ -1,6 +1,7 @@
 package XO;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // this class will manage the running game
@@ -23,27 +24,36 @@ public abstract class Game {
             }
         }
     }
-    private  Mark[][] getBoard(){ //get board
+
+    private synchronized Mark[][] getBoard() { //get board
         return gameBoard;
     }
 
     //function to get input from user
-    public Cell inputCell() {
+    public synchronized Cell inputCell() throws InputMismatchException {
         Scanner input = new Scanner(System.in);
         System.out.println("Enter x,y coordinates (0-4): ");
+        int x,y;
         //gets choice
-        int x = input.nextInt();
-        int y = input.nextInt();
-        if(x<0||y<0||x>4||y>4) {
-            //makes sure you are in range
-            System.out.println("incorrect input. try again");
+        try {
+            x = input.nextInt();
+            y = input.nextInt();
+            if (x < 0 || y < 0 || x > 4 || y > 4) {
+                //makes sure you are in range
+                System.out.println("incorrect input. try again");
+                return inputCell();
+            }
+        }
+        catch (InputMismatchException e){
+            System.out.println("entered something that is not a number . try again");
             return inputCell();
         }
-        Cell inputCell = new Cell(x,y);
+        Cell inputCell = new Cell(x, y);
         if (this.getBoard()[x][y] != Mark.e) {//make sure the cell is empty (e)
             System.out.println("Cell was already chosen");
             inputCell = inputCell();
         }
+
         return inputCell;
 
     }
@@ -66,10 +76,11 @@ public abstract class Game {
 
     }
 
-    public synchronized Mark getTurn(){
+    public synchronized Mark getTurn() {
         return turn;
     }
-    public synchronized void setTurn(Mark t){
+
+    public synchronized void setTurn(Mark t) {
         turn = t;
     }
 
@@ -88,7 +99,7 @@ public abstract class Game {
     }
 
     // Place a mark on board
-    public void placeMove(int row, int col, Mark player) {
+    public synchronized void placeMove(int row, int col, Mark player) {
         if (row >= 0 && row < 5 && col >= 0 && col < 5) {
             gameBoard[row][col] = player;
         } else {
@@ -102,18 +113,18 @@ public abstract class Game {
     }
 
     // CHECK FOR A WINNER (not pretty but effective)
-    public synchronized Mark checkForWinner() {
+    public Mark checkForWinner() {
         // ROWS
         for (int i = 0; i < 5; i++) {
-            if((gameBoard[i][2] == gameBoard [i][0]|| gameBoard[i][2] == gameBoard[i][4])&& gameBoard[i][2] != Mark.e)
-                if(gameBoard[i][1]==gameBoard[i][2] && gameBoard[i][1] == gameBoard[i][3])
+            if ((gameBoard[i][2] == gameBoard[i][0] || gameBoard[i][2] == gameBoard[i][4]) && gameBoard[i][2] != Mark.e)
+                if (gameBoard[i][1] == gameBoard[i][2] && gameBoard[i][1] == gameBoard[i][3])
                     return gameBoard[i][2];
 
         }
 
         // COLUMNS
         for (int j = 0; j < 5; j++) {
-            if((gameBoard[2][j] == gameBoard [0][j]|| gameBoard[2][j] == gameBoard[4][j])&&gameBoard[2][j]!=Mark.e) {
+            if ((gameBoard[2][j] == gameBoard[0][j] || gameBoard[2][j] == gameBoard[4][j]) && gameBoard[2][j] != Mark.e) {
                 if (gameBoard[1][j] == gameBoard[2][j] && gameBoard[1][j] == gameBoard[3][j])
                     return gameBoard[2][j];
             }
@@ -122,14 +133,15 @@ public abstract class Game {
         // DIAGONALS
 
         //main diagonal
-        if(gameBoard[2][2] == gameBoard [0][0]|| gameBoard[2][2] == gameBoard[4][4])
-            if(gameBoard[1][1]==gameBoard[2][2] && gameBoard[1][1] == gameBoard[3][3])
-                return gameBoard[2][2];
-        // anti diagonal
-        if(gameBoard[2][2] == gameBoard [0][4]|| gameBoard[2][2] == gameBoard[4][0])
-            if(gameBoard[1][3]==gameBoard[2][2] && gameBoard[1][3] == gameBoard[3][1])
-                return gameBoard[2][2];
-
+        if(gameBoard[2][2]!=Mark.e) {
+            if (gameBoard[2][2] == gameBoard[0][0] || gameBoard[2][2] == gameBoard[4][4])
+                if (gameBoard[1][1] == gameBoard[2][2] && gameBoard[1][1] == gameBoard[3][3])
+                    return gameBoard[2][2];
+            // anti diagonal
+            if (gameBoard[2][2] == gameBoard[0][4] || gameBoard[2][2] == gameBoard[4][0])
+                if (gameBoard[1][3] == gameBoard[2][2] && gameBoard[1][3] == gameBoard[3][1])
+                    return gameBoard[2][2];
+        }
         // sub diagonals
         if (checkLine(gameBoard[0][1], gameBoard[1][2], gameBoard[2][3], gameBoard[3][4])) {
             return gameBoard[0][1];
@@ -153,14 +165,14 @@ public abstract class Game {
         return (a != Mark.e && a == b && b == c && c == d);
     }
 
-    public boolean isGameOver() { // returns boolean that represents if the game is over
-        if(isBoardFull())
-            return true;
+    public synchronized boolean isGameOver() { // returns boolean that represents if the game is over
+        if (isBoardFull() || checkForWinner() != Mark.e)
+            isGameOver = true;
         return isGameOver;
     }
 
     public void printWinner(Mark type) {
-        switch (type){
+        switch (type) {
             case X:
                 System.out.println("X won");
                 break;
@@ -173,9 +185,6 @@ public abstract class Game {
         }
     }
 
-    public void setGameOver(boolean b) {
-        isGameOver = b;
-    }
 }
 
 

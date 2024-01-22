@@ -19,13 +19,13 @@ public class SelfPlayer extends Player implements Runnable {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            synchronized (game) {
                 if (!(game.getTurn() == playerMark)) {
                     System.out.println(STR."\{playerMark} played:");
                     playAndPrintBoard(chooseRandomCell());
                 }
-            }
+
         }
+
     }
 
     private Cell chooseRandomCell() {
